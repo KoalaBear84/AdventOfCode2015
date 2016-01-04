@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Day5
 {
     class Program
     {
-        static List<string> disallowedSubstrings = new List<string> { "ab", "cd", "pq", "xy" };
-        static List<char> vowels = new List<char> { 'a', 'e', 'i', 'o', 'u' };
+        static List<string> DisallowedSubstrings = new List<string> { "ab", "cd", "pq", "xy" };
+        static char[] Vowels = "aeiou".ToCharArray();
 
         static void Main(string[] args)
         {
@@ -30,7 +28,7 @@ namespace Day5
         static bool ValidWordStar1(string input)
         {
             // No disallowed strings
-            if (disallowedSubstrings.Any(ds => input.Contains(ds)))
+            if (DisallowedSubstrings.Any(ds => input.Contains(ds)))
             {
                 return false;
             }
@@ -42,7 +40,7 @@ namespace Day5
             }
 
             // At least three vowels
-            if (input.Count(character => vowels.Contains(character)) < 3)
+            if (input.Count(character => Vowels.Contains(character)) < 3)
             {
                 return false;
             }

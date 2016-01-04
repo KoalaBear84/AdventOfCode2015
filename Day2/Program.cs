@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Day2
 {
     class Program
     {
+        static Regex Regex = new Regex("(?<Length>\\d+)x(?<Width>\\d+)x(?<Height>\\d+)");
+
         class Package
         {
             public int Length { get; set; }
@@ -18,10 +19,6 @@ namespace Day2
 
         static void Main(string[] args)
         {
-            Package testPackage = new Package() { Height = 1, Length = 1, Width = 10 };
-
-            CalculateRibbon(testPackage);
-
             string[] input = File.ReadAllLines("input.txt");
 
             List<Package> star1Packages = ParseInput(input);
@@ -34,7 +31,7 @@ namespace Day2
             Console.ReadKey();
         }
 
-        private static int CalculateWrapping(List<Package> packages)
+        static int CalculateWrapping(List<Package> packages)
         {
             int wrapping = 0;
 
@@ -46,7 +43,7 @@ namespace Day2
             return wrapping;
         }
 
-        private static int CalculateWrapping(Package package)
+        static int CalculateWrapping(Package package)
         {
             int side1 = package.Length * package.Width;
             int side2 = package.Width * package.Height;
@@ -57,7 +54,7 @@ namespace Day2
             return wrapping;
         }
 
-        private static int CalculateRibbon(List<Package> packages)
+        static int CalculateRibbon(List<Package> packages)
         {
             int ribbon = 0;
 
@@ -69,7 +66,7 @@ namespace Day2
             return ribbon;
         }
 
-        private static int CalculateRibbon(Package package)
+        static int CalculateRibbon(Package package)
         {
             IEnumerable<int> smallest = new[] { package.Length, package.Width, package.Height }.OrderBy(x => x).Take(2);
 
@@ -78,7 +75,7 @@ namespace Day2
             return ribbon;
         }
 
-        private static List<Package> ParseInput(string[] input)
+        static List<Package> ParseInput(string[] input)
         {
             List<Package> packages = new List<Package>();
 
@@ -94,7 +91,7 @@ namespace Day2
         {
             Package package = new Package();
 
-            Match regexMatch = new Regex("(?<Length>\\d+)x(?<Width>\\d+)x(?<Height>\\d+)").Match(line);
+            Match regexMatch = Regex.Match(line);
 
             if (regexMatch.Success)
             {
