@@ -61,20 +61,16 @@ namespace Day7
             // Signal on a to b
             Outputs["b"] = Outputs["a"];
 
-            // Reset all signals
-            foreach(KeyValuePair<string, ushort> output in Outputs.Where(op => op.Key != "b").ToList())
+            // Reset all signals, except "b"
+            foreach (KeyValuePair<string, ushort> output in Outputs.Where(op => op.Key != "b").ToList())
             {
                 Outputs.Remove(output.Key);
             }
 
-            // Reset all rules
-            foreach(Rule rule in Rules)
+            // Reset all rules, except "b"
+            foreach (Rule rule in Rules.Where(r => r.Output != "b"))
             {
-                // Do not overwrite b
-                if (rule.Output != "b")
-                {
-                    rule.Processed = false;
-                }
+                rule.Processed = false;
             }
 
             // Process all rules again
@@ -84,7 +80,7 @@ namespace Day7
                 iterations++;
             }
 
-            Console.WriteLine("Day 7 - Star 2, Answer: {0}", Outputs["a"]);
+            Console.WriteLine($"Day 7 - Star 2, Answer: {Outputs["a"]}");
             Console.ReadKey();
         }
 
